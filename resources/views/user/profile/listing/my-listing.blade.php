@@ -199,9 +199,7 @@
                                                         <a href="{{ route('user.listing.schedule.index',$listing->id) }}" class="bg-gray list-btn-edit"><i class="fa fa-plus"></i> {{ $websiteLang->where('id',83)->first()->custom_text }} </a>
                                                         <a onclick="return confirm('{{ $notify }}')" href="{{ route('user.listing.delete',$listing->id) }}" class="bg-gray list-btn-delete"><i class="fa fa-trash"></i> {{ $websiteLang->where('id',85)->first()->custom_text }} </a>
                                                         <a href="{{ route('user.listing.edit',$listing->id) }}" class="bg-gray list-btn-edit"><i class="fa fa-edit"></i> {{ $websiteLang->where('id',84)->first()->custom_text }} </a>
-                                                        @if($listing->posts->count()>0)
                                                         <a href="{{ route('user.post.index',$listing->id) }}" class="bg-gray list-btn-edit"><i class="fa fa-list"></i> {{ $websiteLang->where('id',527)->first()->custom_text }} </a>
-                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

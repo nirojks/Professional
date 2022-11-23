@@ -144,7 +144,7 @@ Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
     Route::post('create-posts/{id}',[PostController::class,'store'])->name('post.store');
     Route::get('post-edit/{id}',[PostController::class,'edit'])->name('post.edit');
     Route::get('post-details/{slug}',[HomeController::class,'postDetails'])->name('post.details');
-    Route::post('delete-post/{id}',[PostController::class,'delete'])->name('post.delete');
+    Route::delete('delete-post/{id}',[PostController::class,'delete'])->name('post.delete');
     Route::patch('post/update/{id}',[PostController::class,'update'])->name('post.update');
 
 

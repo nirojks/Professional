@@ -59,8 +59,9 @@ class PostController extends Controller
         return view('user.profile.listing.post.create',compact('posts','notify','websiteLang','menus','user','allPosts','listing'));
     }
 
-   	public function store(Request $request)
+   	public function store(Request $request,$listing_id)
    	{
+        // dd($request->all());
    		   // project demo mode check
         if(env('PROJECT_MODE')==0){
             $notification=array('messege'=>env('NOTIFY_TEXT'),'alert-type'=>'error');
@@ -71,7 +72,6 @@ class PostController extends Controller
         $rules = [
             'title'=>'required|unique:posts',
             'slug'=>'required|unique:posts',
-            'listing_id'=>'required',
             'image'=>'required|file',
             'description'=>'required',
         ];
@@ -112,7 +112,7 @@ class PostController extends Controller
         $post->user_id=$user->id;
         $post->title=$request->title;
         $post->slug=$request->slug;
-        $post->listing_id=$request->listing_id;
+        $post->listing_id=$listing_id;
         $post->body=$request->description;
         $post->save();
 
@@ -121,7 +121,7 @@ class PostController extends Controller
             'alert-type'=>'success'
         );
 
-        return redirect()->route('user.post.index')->with($notification);
+        return redirect()->route('user.post.index',$listing_id)->with($notification);
 
 
    	}
@@ -172,7 +172,6 @@ class PostController extends Controller
         $rules = [
             'title'=>'required|unique:posts,title,'.$post->id,
             'slug'=>'required|unique:posts,slug,'.$post->id,
-            'listing_id'=>'required',
             'description'=>'required',
         ];
 
@@ -212,7 +211,6 @@ class PostController extends Controller
             $post->user_id=$user->id;
 	        $post->title=$request->title;
 	        $post->slug=$request->slug;
-	        $post->listing_id=$request->listing_id;
 	        $post->body=$request->description;
             $post->save();
 
@@ -222,13 +220,15 @@ class PostController extends Controller
             'alert-type'=>'success'
         );
 
-        return redirect()->route('user.post.index')->with($notification);
+        return redirect()->route('user.post.index',$post->listing_id)->with($notification);
 
     }
 
 
-    public function delete(Post $post)
+    public function delete($id)
     {
+        $post=Post::where(['id'=>$id])->first();
+        $listing_id = $post->listing_id;
         // project demo mode check
         if(env('PROJECT_MODE')==0){
             $notification=array('messege'=>env('NOTIFY_TEXT'),'alert-type'=>'error');
@@ -245,6 +245,6 @@ class PostController extends Controller
             'alert-type'=>'success'
         );
 
-        return redirect()->route('user.post.index')->with($notification);
+        return redirect()->route('user.post.index',$listing_id)->with($notification);
     }
 }
