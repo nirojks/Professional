@@ -53,6 +53,8 @@ use App\User;
 use App\Helpers\MailHelper;
 use App\ListingClaime;
 use Illuminate\Pagination\Paginator;
+use App\Mail\UserVerification;
+use Illuminate\Support\Facades\Hash;
 class HomeController extends Controller
 {
 
@@ -749,5 +751,48 @@ class HomeController extends Controller
 
         $notification=$this->notify->where('id',41)->first()->custom_text;
         return response()->json(['success'=>$notification]);
+    }
+
+    public function storeRegister(Request $request){
+        $rules = [
+            'name'=>'required',
+            'email'=>'required|unique:users|email',
+            'password'=>'required|min:3',
+            'g-recaptcha-response'=>new Captcha()
+        ];
+
+        $customMessages = [
+            'name.required' =>  $this->errorTexts->where('id',4)->first()->custom_text,
+            'email.required' =>  $this->errorTexts->where('id',1)->first()->custom_text,
+            'email.email' =>  $this->errorTexts->where('id',2)->first()->custom_text,
+            'email.unique' =>  $this->errorTexts->where('id',3)->first()->custom_text,
+            'password.required' =>  $this->errorTexts->where('id',12)->first()->custom_text,
+            'password.confirmed' =>  $this->errorTexts->where('id',14)->first()->custom_text,
+            'password.min' =>  $this->errorTexts->where('id',35)->first()->custom_text,
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+        $user=User::create([
+            'name'=>$request->name,
+            'slug'=>Str::slug($request->name),
+            'email'=>$request->email,
+            'type'=>$request->type,
+            'password'=>Hash::make($request->password),
+            'email_verified_token'=>Str::random(100)
+        ]);
+
+        MailHelper::setMailConfig();
+
+        $template=EmailTemplate::where('id',5)->first();
+        $message=$template->description;
+        $subject=$template->subject;
+        $message=str_replace('{{user_name}}',$user->name,$message);
+        // dd($user, $message,$subject);
+        // $test = new UserVerification($user,$message,$subject);
+        // Mail::to($user->email)->send(new UserVerification($user,$message,$subject));
+
+        $notification=$this->notify->where('id',31)->first()->custom_text;
+        return response()->json(['success'=>$notification]);
+
     }
 }

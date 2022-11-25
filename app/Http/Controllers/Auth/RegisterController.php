@@ -50,6 +50,7 @@ class RegisterController extends Controller
     }
 
     public function storeRegister(Request $request){
+        dd('assdsfdfg');
         $rules = [
             'name'=>'required',
             'email'=>'required|unique:users|email',

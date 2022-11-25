@@ -259,6 +259,17 @@ $isRtl=$setting->text_direction;
                                 <div id="register-one" class="tab-pane">
                                     <form id="registerFormSubmit">
                                         @csrf
+
+                                    <div class="form-group">
+                                    <div class="ls-inputicon-box">
+                                        <!-- <input class="form-control" name="name" type="text" placeholder="{{ $websiteLang->where('id',37)->first()->custom_text }}"> -->
+                                        <select id="type" class="form-control" name="type">
+                                            <option value="professional">Professional</option>
+                                            <option value="user">User</option>
+                                        </select>
+                                        <i class="fs-input-icon sl-icon-user "></i>
+                                    </div>
+                                    </div>
                                     <div class="form-group">
                                         <div class="ls-inputicon-box">
                                             <input class="form-control" name="name" type="text" placeholder="{{ $websiteLang->where('id',37)->first()->custom_text }}">
@@ -685,21 +696,22 @@ $(function() {
         })
 
         $("#registerBtn").on('click',function(e) {
-
+            // console.log('dsfgdfhgjh');
             // project demo mode check
             var isDemo="{{ env('PROJECT_MODE') }}"
             var demoNotify="{{ env('NOTIFY_TEXT') }}"
-            if(isDemo==0){
-                toastr.error(demoNotify);
-                return;
-            }
+            // if(isDemo==0){
+            //     toastr.error(demoNotify);
+            //     return;
+            // }
             // end
-
+            console.log('dsfgdfhgjh');
             e.preventDefault();
             $("#reg-spinner").removeClass('d-none')
             $("#registerBtn").addClass('custom-opacity')
             $("#registerBtn").removeClass('site-btn-effect')
             $("#registerBtn").attr('disabled',true);
+            
             $.ajax({
                 url: "{{ route('register') }}",
                 type:"post",

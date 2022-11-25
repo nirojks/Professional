@@ -195,7 +195,7 @@ Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
 
 // user custom auth route
 Route::get('register',[RegisterController::class,'userRegisterPage'])->name('register');
-Route::post('register',[RegisterController::class,'storeRegister'])->name('register');
+Route::post('register',[HomeController::class,'storeRegister'])->name('register');
 Route::get('user-verify/{token}',[RegisterController::class,'userVerify'])->name('user.verify');
 Route::get('login',[LoginController::class,'userLoginPage'])->name('login');
 Route::post('login',[LoginController::class,'storeLogin'])->name('login');
