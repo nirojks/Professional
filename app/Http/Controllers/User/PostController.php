@@ -45,6 +45,19 @@ class PostController extends Controller
         return view('user.profile.listing.post.index',compact('posts','notify','websiteLang','menus','user','allPosts','listing'));
     }
 
+    public function allPosts()
+    {
+        $user=Auth::guard('web')->user();
+        $posts=Post::with('listings')->orderBy('id','desc')->paginate(10);
+        $allPosts=Post::where('user_id',$user->id)->orderBy('id','desc')->get();
+
+        $notify=$this->notify->where('id',32)->first()->custom_text;
+        $websiteLang=$this->websiteLang;
+        $menus=Navigation::all();
+
+        return view('user.profile.post.index',compact('posts','notify','websiteLang','menus','user','allPosts'));
+    }
+
     public function create($id)
     {
     	$user=Auth::guard('web')->user();
@@ -72,8 +85,7 @@ class PostController extends Controller
         $rules = [
             'title'=>'required|unique:posts',
             'slug'=>'required|unique:posts',
-            'image'=>'required|file',
-            'description'=>'required',
+            'image'=>'file',
         ];
 
         $customMessages = [
@@ -172,7 +184,6 @@ class PostController extends Controller
         $rules = [
             'title'=>'required|unique:posts,title,'.$post->id,
             'slug'=>'required|unique:posts,slug,'.$post->id,
-            'description'=>'required',
         ];
 
         $customMessages = [

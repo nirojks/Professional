@@ -781,7 +781,7 @@ class HomeController extends Controller
             'email_verified_token'=>Str::random(100)
         ]);
 
-        MailHelper::setMailConfig();
+        // MailHelper::setMailConfig();
 
         $template=EmailTemplate::where('id',5)->first();
         $message=$template->description;
@@ -789,7 +789,7 @@ class HomeController extends Controller
         $message=str_replace('{{user_name}}',$user->name,$message);
         // dd($user, $message,$subject);
         // $test = new UserVerification($user,$message,$subject);
-        // Mail::to($user->email)->send(new UserVerification($user,$message,$subject));
+        Mail::to($user->email)->send(new UserVerification($user,$message,$subject));
 
         $notification=$this->notify->where('id',31)->first()->custom_text;
         return response()->json(['success'=>$notification]);

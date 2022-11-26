@@ -60,6 +60,7 @@
 
             <div class="admin-nav">
                 <ul class="">
+                    @if(!isset(auth()->user()->type) || auth()->user()->type=='professional')
                     <li class="{{ Route::is('user.dashboard') ? 'active' : '' }}">
                         <a href="{{ route('user.dashboard') }}"><i class="sl-icon-speedometer"></i><span class="admin-nav-text">{{ $websiteLang->where('id',68)->first()->custom_text }}</span></a>
                     </li>
@@ -85,6 +86,10 @@
                     </li>
                     <li class="{{ Route::is('user.package') ? 'active' : '' }}">
                         <a href="{{ route('user.package') }}"><i class="sl-icon-doc "></i><span class="admin-nav-text">{{ $websiteLang->where('id',86)->first()->custom_text }}</span></a>
+                    </li>
+                    @endif
+                    <li class="{{ Route::is('user.posts') ? 'active' : '' }}">
+                        <a href="{{ route('user.posts') }}"><i class="sl-icon-plus "></i><span class="admin-nav-text">{{ $websiteLang->where('id',527)->first()->custom_text }}</span></a>
                     </li>
 
                     <li>

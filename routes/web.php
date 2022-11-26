@@ -188,6 +188,8 @@ Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
     Route::get('/paymongo-payment-success', [PaymentController::class, 'paymongoPaymentSuccess'])->name('paymongo-payment-success');
     Route::get('/paymongo-payment-cancled', [PaymentController::class, 'paymongoPaymentCancled'])->name('paymongo-payment-cancled');
 
+    Route::get('posts',[PostController::class,'allPosts'])->name('posts');
+
 
 });
 
