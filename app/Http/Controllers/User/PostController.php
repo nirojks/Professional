@@ -48,7 +48,7 @@ class PostController extends Controller
     public function allPosts()
     {
         $user=Auth::guard('web')->user();
-        $posts=Post::with('listings')->orderBy('id','desc')->paginate(10);
+        $posts=Post::with('listing')->orderBy('id','desc')->paginate(10);
         $allPosts=Post::where('user_id',$user->id)->orderBy('id','desc')->get();
 
         $notify=$this->notify->where('id',32)->first()->custom_text;
@@ -58,21 +58,34 @@ class PostController extends Controller
         return view('user.profile.post.index',compact('posts','notify','websiteLang','menus','user','allPosts'));
     }
 
-    public function create($id)
+    public function create($id=null)
     {
     	$user=Auth::guard('web')->user();
         $posts=Post::where(['user_id'=>$user->id])->orderBy('id','desc')->paginate(10);
         $allPosts=Post::where('user_id',$user->id)->orderBy('id','desc')->get();
-        // $listings=Listing::where('user_id',$user->id)->get();
+        $listings=Listing::where('user_id',$user->id)->get();
         $listing = Listing::where('id',$id)->first();
+        if(auth()->user()->type!='user' && $listings->count()==0){
+            $notification=array(
+                'messege'=>$this->notify->where('id',39)->first()->custom_text,
+                'alert-type'=>'error'
+            );
+
+            return redirect()->route('user.dashboard')->with($notification);
+        }
+        $postCreateWithListingID = false;
+        if($id == null){
+            $listings=null;
+            $postCreateWithListingID = true;
+        }
         $notify=$this->notify->where('id',32)->first()->custom_text;
         $websiteLang=$this->websiteLang;
         $menus=Navigation::all();
 
-        return view('user.profile.listing.post.create',compact('posts','notify','websiteLang','menus','user','allPosts','listing'));
+        return view('user.profile.listing.post.create',compact('posts','postCreateWithListingID','listings','notify','websiteLang','menus','user','allPosts','listing'));
     }
 
-   	public function store(Request $request,$listing_id)
+   	public function store(Request $request,$listing_id=null)
    	{
         // dd($request->all());
    		   // project demo mode check
@@ -124,8 +137,8 @@ class PostController extends Controller
         $post->user_id=$user->id;
         $post->title=$request->title;
         $post->slug=$request->slug;
-        $post->listing_id=$listing_id;
-        $post->body=$request->description;
+        $post->listing_id=$listing_id??"0";
+        $post->body=$request->description??"";
         $post->save();
 
         $notification=array(
@@ -133,6 +146,9 @@ class PostController extends Controller
             'alert-type'=>'success'
         );
 
+        if($listing_id==null){
+            return redirect()->route('user.posts',$listing_id)->with($notification);
+        }
         return redirect()->route('user.post.index',$listing_id)->with($notification);
 
 
@@ -222,7 +238,7 @@ class PostController extends Controller
             $post->user_id=$user->id;
 	        $post->title=$request->title;
 	        $post->slug=$request->slug;
-	        $post->body=$request->description;
+	        $post->body=$request->description??"";
             $post->save();
 
 
@@ -231,6 +247,9 @@ class PostController extends Controller
             'alert-type'=>'success'
         );
 
+        if(auth()->user()->type=='user'){
+            return redirect()->route('user.posts')->with($notification);
+        }
         return redirect()->route('user.post.index',$post->listing_id)->with($notification);
 
     }
@@ -239,7 +258,7 @@ class PostController extends Controller
     public function delete($id)
     {
         $post=Post::where(['id'=>$id])->first();
-        $listing_id = $post->listing_id;
+        $listing_id = (isset($post->listing_id) && !empty($post->listing_id))?$post->listing_id:null;
         // project demo mode check
         if(env('PROJECT_MODE')==0){
             $notification=array('messege'=>env('NOTIFY_TEXT'),'alert-type'=>'error');
@@ -249,13 +268,18 @@ class PostController extends Controller
 
         $old_image=$post->image;
         $post->delete();
-        if(File::exists(public_path($old_image)))unlink(public_path($old_image));
+        if(!empty($old_image)){
+            if(File::exists(public_path($old_image)))unlink(public_path($old_image));
+        }
 
         $notification=array(
             'messege'=>$this->notify->where('id',10)->first()->custom_text,
             'alert-type'=>'success'
         );
 
+        if($listing_id ==null){
+            return redirect()->route('user.posts')->with($notification);
+        }
         return redirect()->route('user.post.index',$listing_id)->with($notification);
     }
 }

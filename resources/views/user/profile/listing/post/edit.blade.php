@@ -58,12 +58,14 @@
                 <div class="row">
 
                     <div class="col-md-6">
+                        @if(isset($post->image) && !empty($post->image))
                         <div class="form-group">
                             <label for="">{{ $websiteLang->where('id',126)->first()->custom_text }}</label>
                             <div><img src="{{ $post->image ? url($post->image) : '' }}" alt="old post image" class="w_200"></div>
                         </div>  
+                        @endif
                         <div class="form-group">
-                            <label>{{ $websiteLang->where('id',121)->first()->custom_text }} <span class="text-danger">*</span></label>
+                            <label>{{ $websiteLang->where('id',121)->first()->custom_text }} </label>
                             <div class="ls-inputicon-box">
                                 <input class="form-control-file wt-form-control" name="image" type="file">
                             </div>
@@ -82,7 +84,7 @@
             </div>
             <div class="panel-body wt-panel-body p-a20 m-b30 bg-white">
                 <div>
-                    <label>{{ $websiteLang->where('id',103)->first()->custom_text }} <span class="text-danger">*</span></label>
+                    <label>{{ $websiteLang->where('id',103)->first()->custom_text }} </label>
                     <textarea class="form-control" rows="5" name="description">{{ $post->body }}</textarea>
                 </div>
             </div>

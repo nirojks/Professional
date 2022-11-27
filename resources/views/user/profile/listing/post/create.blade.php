@@ -8,7 +8,7 @@
 
     <div class="content-admin-main">
 
-        <form action="{{ route('user.post.store',$listing->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('user.post.store',isset($listing->id)?$listing->id:'') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
         <div class="wt-admin-right-page-header clearfix">
@@ -36,13 +36,31 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label >{{ $websiteLang->where('id',91)->first()->custom_text }} <span class="text-danger">*</span></label>
+                                <label >{{ $websiteLang->where('id',91)->first()->custom_text }} </label>
                                 <div class="ls-inputicon-box">
                                     <input class="form-control wt-form-control" id="slug" name="slug" type="text" value="{{ old('slug') }}">
                                     <i class="fs-input-icon fa fa-edit"></i>
                                 </div>
                             </div>
                         </div>
+                        @if(!empty($listings))
+                        <div class="col-md-12">
+                            <div class="form-group city-outer-bx has-feedback">
+                                <label>{{ $websiteLang->where('id',56)->first()->custom_text }} <span class="text-danger">*</span></label>
+                                <div class="ls-inputicon-box">
+                                    <select class="wt-select-box selectpicker" name="listing_id" data-live-search="true" id="listing_id" data-bv-field="city">
+                                        <option class="bs-title-option" value="">{{ $websiteLang->where('id',529)->first()->custom_text }}</option>
+                                        @foreach ($listings as $listing)
+                                        <option {{ old('listing_id')==$listing->id ? 'selected' : '' }} value="{{ $listing->id }}" class="bs-title-option" value="">{{ $listing->title }}</option>
+                                        @endforeach
+                                    </select>
+                                    <i class="fs-input-icon fa fa-edit custom-align"></i>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
             </div>
         </div>
@@ -58,7 +76,7 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>{{ $websiteLang->where('id',121)->first()->custom_text }} <span class="text-danger">*</span></label>
+                            <label>{{ $websiteLang->where('id',121)->first()->custom_text }} </label>
                             <div class="ls-inputicon-box">
                                 <input class="form-control-file wt-form-control" name="image" type="file">
                             </div>
@@ -77,7 +95,7 @@
             </div>
             <div class="panel-body wt-panel-body p-a20 m-b30 bg-white">
                 <div>
-                    <label>{{ $websiteLang->where('id',103)->first()->custom_text }} <span class="text-danger">*</span></label>
+                    <label>{{ $websiteLang->where('id',103)->first()->custom_text }} </label>
                     <textarea class="form-control" rows="5" name="description">{{ old('description') }}</textarea>
                 </div>
             </div>

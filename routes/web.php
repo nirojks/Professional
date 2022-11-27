@@ -119,6 +119,9 @@ Route::get('user-profile',[HomeController::class,'userProfile'])->name('user-pro
 Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
 
     Route::get('dashboard',[DashboardController::class,'dashboard'])->name('dashboard');
+
+    Route::group(['middleware'=>'professionals'],function (){
+
     Route::get('my-listing',[ListingController::class,'index'])->name('my.listing');
     Route::get('create-listing',[ListingController::class,'create'])->name('create.listing');
 
@@ -139,13 +142,6 @@ Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
     Route::get('schedule-delete/{id}',[ListingScheduleController::class,'delete'])->name('listing.schedule.delete');
     Route::get('listing-schedule-status/{id}',[ListingScheduleController::class,'changeStatus'])->name('listing.schedule.status');
 
-    Route::get('listing-posts/{id}',[PostController::class,'index'])->name('post.index');
-    Route::get('create-posts/{id}',[PostController::class,'create'])->name('post.create');
-    Route::post('create-posts/{id}',[PostController::class,'store'])->name('post.store');
-    Route::get('post-edit/{id}',[PostController::class,'edit'])->name('post.edit');
-    Route::get('post-details/{slug}',[HomeController::class,'postDetails'])->name('post.details');
-    Route::delete('delete-post/{id}',[PostController::class,'delete'])->name('post.delete');
-    Route::patch('post/update/{id}',[PostController::class,'update'])->name('post.update');
 
 
     Route::get('review',[UserHomeController::class,'review'])->name('review');
@@ -188,9 +184,19 @@ Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
     Route::get('/paymongo-payment-success', [PaymentController::class, 'paymongoPaymentSuccess'])->name('paymongo-payment-success');
     Route::get('/paymongo-payment-cancled', [PaymentController::class, 'paymongoPaymentCancled'])->name('paymongo-payment-cancled');
 
+    
+});
+
+    Route::get('listing-posts/{id}',[PostController::class,'index'])->name('post.index');
+    Route::get('create-posts/{id}',[PostController::class,'create'])->name('post.create');
+    Route::post('create-posts/{id?}',[PostController::class,'store'])->name('post.store');
+    Route::get('post-edit/{id}',[PostController::class,'edit'])->name('post.edit');
+    Route::get('post-details/{slug}',[HomeController::class,'postDetails'])->name('post.details');
+    Route::delete('delete-post/{id}',[PostController::class,'delete'])->name('post.delete');
+    Route::post('delete-post/{id}',[PostController::class,'delete'])->name('post.delete');
+    Route::patch('post/update/{id}',[PostController::class,'update'])->name('post.update');
     Route::get('posts',[PostController::class,'allPosts'])->name('posts');
-
-
+    Route::get('create-posts',[PostController::class,'create'])->name('create.posts');
 });
 
 

@@ -16,7 +16,7 @@ class CheckUserType
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        // return $next($request);
         if (auth()->user()->type == 'professional') {
             return $next($request);
         }
@@ -24,7 +24,7 @@ class CheckUserType
             'messege'=> "You dont have permission to access this module",
             'alert-type'=>'error'
         );
-        return redirect()->route('home')->with($notification);
+        return redirect()->route('user.dashboard')->with($notification);
 
     }
 }
