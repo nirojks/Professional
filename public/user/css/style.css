@@ -18917,3 +18917,10 @@ textarea.form-control2 {
 .razorpay-payment-button:hover {
     text-shadow: -400px 0 0 #fff, 0 0 0 #fff;
 }
+
+
+.post-user-img{
+    border-radius: 50%;
+    float: left;
+    margin-right: 5px;
+}

@@ -40,7 +40,10 @@
                                                    
                                                 </div>
                                                 @endif
-                                                <p class="post-text">Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p> <a href="{{route('user.post.details',$post->slug)}}">Read more..</a>
+                                                <p class="post-text">{{ substr($post->body, 0, 100) }}...</p> 
+                                                <br>
+                                                <br>
+                                                <a href="{{route('user.post.details',$post->slug)}}">Read more..</a>
 
                                                 <div class="list-category-content">
                                                     <div class="listing-logo-outer">

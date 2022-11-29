@@ -90,6 +90,7 @@ Route::get('search-listing',[HomeController::class,'searchListingPage'])->name('
 Route::post('send-claim',[HomeController::class,'sendClaime'])->name('send-claim');
 Route::get('/about-us',[HomeController::class,'aboutUs'])->name('about.us');
 Route::get('/blog',[HomeController::class,'blog'])->name('blog');
+Route::get('/post',[HomeController::class,'post'])->name('post');
 Route::get('/blog-details/{slug}',[HomeController::class,'blogDetails'])->name('blog.details');
 Route::get('/blog-category/{slug}',[HomeController::class,'blogCategory'])->name('blog.category');
 Route::get('/blog-search',[HomeController::class,'blogSearch'])->name('blog.search');

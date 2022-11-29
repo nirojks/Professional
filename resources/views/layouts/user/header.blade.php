@@ -276,6 +276,13 @@
                             @endif
 
                             @php
+                                $isPost=$menus->where('id',17)->first();
+                            @endphp
+                            @if ($isPost->status==1)
+                            <li><a href="{{ route('post') }}">{{ $isPost->navbar }}</a></li>
+                            @endif
+
+                            @php
                                 $isContact=$menus->where('id',8)->first();
                             @endphp
                             @if ($isContact->status==1)

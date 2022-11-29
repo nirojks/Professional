@@ -147,7 +147,7 @@ class PostController extends Controller
         );
 
         if($listing_id==null){
-            return redirect()->route('user.posts',$listing_id)->with($notification);
+            return redirect()->route('user.posts')->with($notification);
         }
         return redirect()->route('user.post.index',$listing_id)->with($notification);
 
@@ -247,7 +247,7 @@ class PostController extends Controller
             'alert-type'=>'success'
         );
 
-        if(auth()->user()->type=='user'){
+        if(auth()->user()->type=='user' || $post->listing_id==0){
             return redirect()->route('user.posts')->with($notification);
         }
         return redirect()->route('user.post.index',$post->listing_id)->with($notification);

@@ -299,6 +299,18 @@ class HomeController extends Controller
         return view('user.blog.index',compact('blogs','seo_text','image','websiteLang','menus','setting'));
     }
 
+    public function post(){
+        Paginator::useBootstrap();
+        $paginate_qty=$this->paginator->where('id',1)->first()->qty;
+        $posts=Blog::orderBy('id','desc')->paginate($paginate_qty);
+        $seo_text=SeoText::find(6);
+        $image=BannerImage::find(5);
+        $websiteLang=$this->websiteLang;
+        $menus=Navigation::all();
+        $setting=Setting::first();
+        return view('user.post.index',compact('posts','seo_text','image','websiteLang','menus','setting'));
+    }
+
     public function blogDetails($slug){
 
         $blog=Blog::where(['slug'=>$slug,'status'=>1])->first();
