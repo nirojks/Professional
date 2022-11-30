@@ -14,4 +14,8 @@ class Post extends Model
     public function listing(){
         return $this->belongsTo(Listing::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

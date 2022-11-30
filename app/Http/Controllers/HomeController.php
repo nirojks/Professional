@@ -302,7 +302,10 @@ class HomeController extends Controller
     public function post(){
         Paginator::useBootstrap();
         $paginate_qty=$this->paginator->where('id',1)->first()->qty;
-        $posts=Blog::orderBy('id','desc')->paginate($paginate_qty);
+        $posts=Post::with('listing','user')->orderBy('id','desc')->paginate($paginate_qty);
+        // foreach ($posts as $key => $value) {
+        //     dd($value);
+        // }
         $seo_text=SeoText::find(6);
         $image=BannerImage::find(5);
         $websiteLang=$this->websiteLang;

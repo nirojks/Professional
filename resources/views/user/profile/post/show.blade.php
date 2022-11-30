@@ -41,14 +41,28 @@
                 <div class="col-lg-8 col-md-12 col-sm-12">
                    <!-- BLOG START -->
                      <div class="blog-post blog-md date-style-1 blog-list-1 clearfix  m-b60 bg-white" >
+                        <div class="post-user">
+                            @if($post->listing_id == 0 && isset($post->user) && !empty($post->user))
+                                @if(empty($post->user->image))
+                                <img class="post-user-img" src="http://127.0.0.1:8000/uploads/custom-images/user-2021-09-08-03-05-05-9773.jpg" alt="" height="30px" width="30px"> <p style="padding-top: 5px; ">By {{ $post->user->name }}</p>
+                                @else
+                                <img class="post-user-img" src="{{ asset($post->user->image) }}" alt="" height="30px" width="30px"> <p style="padding-top: 5px; ">By {{ $post->user->name }}</p>
+                                @endif
+                            @elseif($post->listing_id != 0)
+                            <span class="listing-cat-address"><a href="{{ route('listing.show',$post->listing->slug) }}"><i class="sl-icon-layers" style="float:left; margin-right:5px; padding-top:3px;"></i><p>{{ $post->listing->title }}</p></a></span>
+                            @endif  
+                            
+                        </div>
                         <div class="wt-post-media wt-img-effect zoom-slow">
-                            <a href="javascript:;"><img src="{{ asset($post->image) }}" alt=""></a>
+                            <a href="javascript:;"><img src="{{ asset($post->image) }}" alt="" height="400px"></a>
                         </div>
                         <div class="wt-post-info  bg-white p-t30">
                             <div class="wt-post-meta ">
                                 <ul>
                                     <li class="post-date"><i class="fa fa-calendar-o site-text-secondry"></i><span>{{ $post->created_at->format('M d Y') }}</span></li>
+                                    @if($post->listing_id !=0)
                                     <li class="post-catagory"><i class="fa fa-tags site-text-secondry"></i><a href="{{ route('listing.show',$post->listing->slug) }}">{{ $post->listing->title }} </a> </li>
+                                    @endif
                                 </ul>
                             </div>
                             <div class="wt-post-title ">
