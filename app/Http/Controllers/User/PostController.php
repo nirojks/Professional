@@ -75,7 +75,9 @@ class PostController extends Controller
         }
         $postCreateWithListingID = false;
         if($id == null){
-            $listings=null;
+            if(auth()->user()->type=='user'){
+                $listings=null;
+            }
             $postCreateWithListingID = true;
         }
         $notify=$this->notify->where('id',32)->first()->custom_text;

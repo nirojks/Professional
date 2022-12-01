@@ -87,6 +87,7 @@ Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/listings',[HomeController::class,'listings'])->name('listings');
 Route::get('/listing/{slug}',[HomeController::class,'listingShow'])->name('listing.show');
 Route::get('search-listing',[HomeController::class,'searchListingPage'])->name('search-listing');
+Route::get('search-post',[HomeController::class,'searchPostPage'])->name('search-post');
 Route::post('send-claim',[HomeController::class,'sendClaime'])->name('send-claim');
 Route::get('/about-us',[HomeController::class,'aboutUs'])->name('about.us');
 Route::get('/blog',[HomeController::class,'blog'])->name('blog');

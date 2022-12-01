@@ -299,19 +299,31 @@ class HomeController extends Controller
         return view('user.blog.index',compact('blogs','seo_text','image','websiteLang','menus','setting'));
     }
 
-    public function post(){
+    public function post(Request $request){
+        // dd($request->all());
         Paginator::useBootstrap();
         $paginate_qty=$this->paginator->where('id',1)->first()->qty;
-        $posts=Post::with('listing','user')->orderBy('id','desc')->paginate($paginate_qty);
+        $data=Post::with('listing','user')->orderBy('id','desc');
+
+        if($request->has('search') && !empty($request->search)){
+            $data->where('title','LIKE','%'.$request->search.'%');
+        }
+
+        if($request->has('listing_id') && !empty($request->listing_id)){
+            $data->where('listing_id',$request->listing_id);
+        }
+
+        $posts = $data->paginate($paginate_qty);
         // foreach ($posts as $key => $value) {
         //     dd($value);
         // }
+        $listings = Listing::where('status',1)->orderBy('id','desc')->get();
         $seo_text=SeoText::find(6);
         $image=BannerImage::find(5);
         $websiteLang=$this->websiteLang;
         $menus=Navigation::all();
         $setting=Setting::first();
-        return view('user.post.index',compact('posts','seo_text','image','websiteLang','menus','setting'));
+        return view('user.post.index',compact('posts','seo_text','image','websiteLang','menus','setting','listings'));
     }
 
     public function blogDetails($slug){

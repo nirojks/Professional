@@ -90,7 +90,7 @@
                                 @endphp
                                 @endforeach
                                 @else
-                                    <h4 class="text-danger py-5 text-center">{{ $websiteLang->where('id',396)->first()->custom_text }}</h4>
+                                    <h4 class="text-danger py-5 text-center">{{ __('Post not found') }}</h4>
                                 @endif
                              
                             </div>
@@ -104,15 +104,44 @@
 
 
 
-                    <!-- <div class="col-xl-4 col-lg-12 col-md-12">
+                    <div class="col-xl-4 col-lg-12 col-md-12">
 
                         <div class="side-bar right shadow p-a30">
                             <div class="wt-listing-sidebar-form ">
-                               
+                            <form action="{{ route('post') }}" method="GET">
+                                    <div class="form-group filter-destination">
+                                        <input type="text"  class="form-control" name="search" placeholder="{{ $websiteLang->where('id',1)->first()->custom_text }}" value="{{ request()->has('search') ? request()->get('search') : '' }}">
+                                    </div>
+                                    <div class="form-group filter-choose-category">
+
+                                        <select class="form-control select2" name="listing_id">
+                                            <option value="">{{ $websiteLang->where('id',2)->first()->custom_text }}</option>
+                                            @foreach ($listings as $category)
+                                                @if (request()->has('listing_id'))
+                                                <option {{ request()->get('listing_id') == $category->id ? 'selected' : ''  }} value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @elseif (isset($categoryId))
+                                                    <option {{ $categoryId == $category->id ? 'selected' : ''  }} value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @else
+                                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                                @endif
+
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @php
+                                        $page_type=request()->get('page_type') ;
+                                    @endphp
+                                    <input type="hidden" id="page_type" name="page_type" value="{{ $page_type }}">
+
+                                   <div class="form-group">
+                                           <button type="submit" class="site-button-secondry site-btn-effect">{{ $websiteLang->where('id',4)->first()->custom_text }}</button>
+                                   </div>
+
+                                </form>
                             </div>
                         </div>
 
-                    </div> -->
+                    </div>
                 </div>
 
             </div>

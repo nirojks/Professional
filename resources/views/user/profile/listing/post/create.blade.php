@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if(!empty($listings))
+                        @if(!empty($listings) && $postCreateWithListingID ==true)
                         <div class="col-md-12">
                             <div class="form-group city-outer-bx has-feedback">
                                 <label>{{ $websiteLang->where('id',56)->first()->custom_text }} <span class="text-danger">*</span></label>
