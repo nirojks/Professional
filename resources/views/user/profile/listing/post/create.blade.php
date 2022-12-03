@@ -43,6 +43,17 @@
                                 </div>
                             </div>
                         </div>
+                        @if(auth()->user()->type!='user')
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label >{{ __('Number') }} </label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control wt-form-control" id="number" name="number" type="text" value="{{ old('number') }}">
+                                    <i class="fs-input-icon fa fa-edit"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         @if(!empty($listings) && $postCreateWithListingID ==true)
                         <div class="col-md-12">
                             <div class="form-group city-outer-bx has-feedback">

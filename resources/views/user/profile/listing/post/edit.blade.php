@@ -44,6 +44,17 @@
                                 </div>
                             </div>
                         </div>
+                        @if(auth()->user()->type!='user')
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label >{{ __('Number') }} <span class="text-danger">*</span></label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control wt-form-control" id="number" name="number" type="text" value="{{ $post->number }}">
+                                    <i class="fs-input-icon fa fa-edit"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
             </div>
         </div>

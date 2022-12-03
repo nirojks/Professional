@@ -313,6 +313,22 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#post-pages"
+                    aria-expanded="true" aria-controls="blog-pages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>{{ __('Post') }}</span>
+                </a>
+                <div id="post-pages" class="collapse {{ Route::is('admin.post.index') ? 'show': '' }}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+
+                        <a class="collapse-item {{ Route::is('admin.post.index') || Route::is('admin.post.edit') ? 'active':'' }}" href="{{ route('admin.post.index') }}">{{ __('Posts') }}</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#contact-2-pages"
                     aria-expanded="true" aria-controls="contact-2-pages">
                     <i class="fas fa-fw fa-folder"></i>

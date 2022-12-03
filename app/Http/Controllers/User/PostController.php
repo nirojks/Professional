@@ -19,7 +19,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:web');
+        // $this->middleware('auth:web');
         $notify=NotificationText::all();
         $this->notify=$notify;
 
@@ -43,6 +43,41 @@ class PostController extends Controller
         $menus=Navigation::all();
 
         return view('user.profile.listing.post.index',compact('posts','notify','websiteLang','menus','user','allPosts','listing'));
+    }
+
+    public function postIndex(){
+        $posts=Post::get();
+        $websiteLang=$this->websiteLang;
+        return view('admin.post.index',compact('posts','websiteLang'));
+    }
+
+    public function postEdit($id)
+    {
+        $post=Post::findorFail($id);
+        $websiteLang=$this->websiteLang;
+        return view('admin.post.edit',compact('post','websiteLang'));
+    }
+
+    public function postUpdate(Request $request, $id)
+    {
+        $post=Post::where(['id'=>$id])->first();
+
+        // project demo mode check
+        if(env('PROJECT_MODE')==0){
+        $notification=array('messege'=>env('NOTIFY_TEXT'),'alert-type'=>'error');
+        return redirect()->back()->with($notification);
+        }
+
+        $user=Auth::guard('web')->user();
+        $post->number=$request->number??"";
+        $post->save();
+
+        $notification=array(
+            'messege'=>$this->notify->where('id',8)->first()->custom_text,
+            'alert-type'=>'success'
+        );
+
+        return redirect()->route('admin.post.index')->with($notification);
     }
 
     public function allPosts()
@@ -141,6 +176,7 @@ class PostController extends Controller
         $post->slug=$request->slug;
         $post->listing_id=$listing_id??"0";
         $post->body=$request->description??"";
+        $post->number=$request->number??"";
         $post->save();
 
         $notification=array(
@@ -241,6 +277,7 @@ class PostController extends Controller
 	        $post->title=$request->title;
 	        $post->slug=$request->slug;
 	        $post->body=$request->description??"";
+            $post->number=$request->number??"";
             $post->save();
 
 

@@ -335,6 +335,11 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::resource('blog', BlogController::class);
     Route::get('blog-status/{id}',[BlogController::class,'changeStatus'])->name('blog.status');
 
+    //Post
+    Route::get('post-index',[PostController::class,'postIndex'])->name('post.index');
+    Route::get('post-edit/{id}',[PostController::class,'postEdit'])->name('post.edit');
+    Route::patch('post-update/{id}',[PostController::class,'postUpdate'])->name('post.update');
+
     // Blog comment
     Route::get('blog-comment',[BlogCommentController::class,'allComments'])->name('blog-comment');
     Route::get('delete-blog-comment/{id}',[BlogCommentController::class,'deleteComment'])->name('delete.blog.comment');
