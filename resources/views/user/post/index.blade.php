@@ -51,7 +51,7 @@
                                 @endphp
                                 @foreach ($posts as $index => $post)
                                 <div class="wt-listing-container">
-                                    <div class="list-item-container posts-list m-b30 clearfix">
+                                    <div class="list-item-container posts-list-front m-b30 clearfix">
                                         
                                     <h4 class="listing-place-name"><a href="{{ route('user.post.details',$post->slug) }}">{{ $post->title }} </a></h4>
                                     <div class="post-user">

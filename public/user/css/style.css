@@ -14634,6 +14634,10 @@ ol.commentlist li::after {
     padding: 20px;
     width: 70%;
 }
+.posts-list-front{
+    padding: 20px;
+    width: 100%; 
+}
 .post-text{
     float: left;
     margin-top: 25px;
