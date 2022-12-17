@@ -8,7 +8,7 @@
 
     <div class="content-admin-main">
 
-        <form action="{{ route('user.post.store',isset($listing->id)?$listing->id:'') }}" method="POST" enctype="multipart/form-data">
+        <form id="postForm" action="{{ route('user.post.store',isset($listing->id)?$listing->id:'') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
         <div class="wt-admin-right-page-header clearfix">
@@ -27,11 +27,10 @@
                             <div class="form-group">
                                 <label >{{ $websiteLang->where('id',90)->first()->custom_text }} <span class="text-danger">*</span></label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control wt-form-control" name="title" id="title" type="text" value="{{ old('title') }}">
+                                    <input class="form-control wt-form-control" name="title" id="title" type="text" value="{{ old('title') }}" required>
                                     <i class="fs-input-icon fa fa-edit"></i>
-
-                                 
                                 </div>
+                                <div class="errorMessage"></div>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -41,6 +40,7 @@
                                     <input class="form-control wt-form-control" id="slug" name="slug" type="text" value="{{ old('slug') }}">
                                     <i class="fs-input-icon fa fa-edit"></i>
                                 </div>
+                                <div class="errorMessage"></div>
                             </div>
                         </div>
                         @if(auth()->user()->type!='user')
@@ -51,6 +51,7 @@
                                     <input class="form-control wt-form-control" id="number" name="number" type="text" value="{{ old('number') }}">
                                     <i class="fs-input-icon fa fa-edit"></i>
                                 </div>
+                                <div class="errorMessage"></div>
                             </div>
                         </div>
                         @endif
@@ -59,7 +60,7 @@
                             <div class="form-group city-outer-bx has-feedback">
                                 <label>{{ $websiteLang->where('id',56)->first()->custom_text }} <span class="text-danger">*</span></label>
                                 <div class="ls-inputicon-box">
-                                    <select class="wt-select-box selectpicker" name="listing_id" data-live-search="true" id="listing_id" data-bv-field="city">
+                                    <select class="wt-select-box selectpicker" name="listing_id" data-live-search="true" id="listing_id" data-bv-field="city" required>
                                         <option class="bs-title-option" value="">{{ $websiteLang->where('id',529)->first()->custom_text }}</option>
                                         @foreach ($listings as $listing)
                                         <option {{ old('listing_id')==$listing->id ? 'selected' : '' }} value="{{ $listing->id }}" class="bs-title-option" value="">{{ $listing->title }}</option>
@@ -69,6 +70,7 @@
 
 
                                 </div>
+                                <div class="errorMessage"></div>
                             </div>
                         </div>
                         @endif
@@ -121,6 +123,7 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
 
 <script>
@@ -131,6 +134,19 @@
                 $("#slug").val(convertToSlug($(this).val()));
             })
 
+            
+            $("#postForm").validate({
+                rules: {
+                    title: "required",
+                },
+                messages: {
+                    title: "Title field is Required",
+                },
+                errorPlacement: function(error, element) {
+                    error.insertAfter( element.closest( ".form-group" ) );
+                }
+            
+            })
         });
 
     })(jQuery);

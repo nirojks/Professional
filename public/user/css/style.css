@@ -18928,3 +18928,9 @@ textarea.form-control2 {
     float: left;
     margin-right: 5px;
 }
+
+ .error {
+    color: #a94442;
+    border-color: #ebccd1;
+    padding:1px 0px 1px 0px;
+  }
