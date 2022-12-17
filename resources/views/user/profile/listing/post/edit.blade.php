@@ -8,7 +8,7 @@
 
     <div class="content-admin-main">
 
-        <form action="{{ route('user.post.update',$post->id) }}" method="POST" enctype="multipart/form-data">
+        <form id="postForm" action="{{ route('user.post.update',$post->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('patch')
 
@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label >{{ $websiteLang->where('id',90)->first()->custom_text }} <span class="text-danger">*</span></label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control wt-form-control" name="title" id="title" type="text" value="{{ $post->title }}">
+                                    <input class="form-control wt-form-control" name="title" id="title" type="text" value="{{ $post->title }}" required>
                                     <i class="fs-input-icon fa fa-edit"></i>
 
                                  
@@ -110,6 +110,7 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
 
 <script>
@@ -118,6 +119,19 @@
         $(document).ready(function() {
             $("#title").on("focusout",function(e){
                 $("#slug").val(convertToSlug($(this).val()));
+            })
+
+            $("#postForm").validate({
+                rules: {
+                    title: "required",
+                },
+                messages: {
+                    title: "Title field is Required",
+                },
+                errorPlacement: function(error, element) {
+                    error.insertAfter( element.closest( ".form-group" ) );
+                }
+            
             })
 
         });
