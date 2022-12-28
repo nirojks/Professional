@@ -4,11 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Slider extends Model
+class SliderImage extends Model
 {
     protected $fillable=[
         'image',
-        'status',
-        'type'
+        'status'
     ];
 }

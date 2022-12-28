@@ -391,6 +391,7 @@ class SettingsController extends Controller
 
     public function livechatSetting(){
         $setting=Setting::first();
+        // dd($setting);
         $websiteLang=$this->websiteLang;
         $menus=Navigation::all();
         return view('admin.settings.live-chat.index',compact('setting','websiteLang','menus'));
@@ -404,7 +405,7 @@ class SettingsController extends Controller
             return redirect()->back()->with($notification);
         }
         // end
-
+        // dd($request->all());
         if($request->live_chat==1){
             $rules = [
                 'livechat_script'=>'required'
