@@ -102,9 +102,9 @@ class HomeController extends Controller
         $bannerImages=BannerImage::all();
         $currency=Setting::first();
 
+        $sliders = Slider::where('type','slider')->get();
 
-
-        return view('user.index',compact('banner','listingCategories','section','features','overviewVideo','overviews','blogs','testimonials','locations','listingPackages','listings','days','locationsForSearch','seo_text','websiteLang','bannerImages','currency'));
+        return view('user.index',compact('banner','listingCategories','section','features','overviewVideo','overviews','blogs','testimonials','locations','listingPackages','listings','days','locationsForSearch','seo_text','websiteLang','bannerImages','currency','sliders'));
     }
 
 

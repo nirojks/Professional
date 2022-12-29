@@ -20,82 +20,74 @@
         @if ($banner_section->show_homepage==1)
         <!-- Banner -->
 
-            <!-- <div id="myCarousel" class="banner-image" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
+            @if($banner->status==1)
 
+            <div class="banner-image">
+                    <!-- <div class="banner-content-area"> -->
+                        <!-- <div class="container"> -->
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                <div class="item active">
-                    <img src="la.jpg" alt="Los Angeles" style="width:100%;">
-                </div>
 
-                <div class="item">
-                    <img src="chicago.jpg" alt="Chicago" style="width:100%;">
-                </div>
-                
-                <div class="item">
-                    <img src="ny.jpg" alt="New york" style="width:100%;">
-                </div>
-                </div>
-                <div class="banner-content-area">
-                    <div class="container">
-                        <form method="GET" action="{{ route('search-listing') }}">
+                @foreach($sliders as $index=>$slider)
 
-                            <div class="banner-textrow">
-                                <strong>{{ $banner_section->header }}</strong>
-                                <span>{{ $banner_section->description }}</span>
+                <div class="item {{$index==0 ? 'active':''}}">
+                    <img src="{{ $slider->image ? asset($slider->image) : '' }}" alt="Los Angeles" style="width:100%;">
+                    <div class="carousel-caption captionform">
+                    <form method="GET" action="{{ route('search-listing') }}">
+                        <div class="banner-textrow">
+                            <h1 style="color:white;">{{ $banner_section->header }}</h1>
+                            <span>{{ $banner_section->description }}</span>
+                        </div>
+
+                        <div class="search-bar-warp row">
+
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group shadow-line">
+                                    <input type="text" class="form-control" placeholder="{{ $websiteLang->where('id',1)->first()->custom_text }}" name="search">
+                                </div>
                             </div>
 
-                            <div class="search-bar-warp row">
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group shadow-line">
+                                    <select class="form-control select2" name="category_id" >
+                                            <option value="">{{ $websiteLang->where('id',2)->first()->custom_text }}</option>
+                                            @foreach ($listingCategories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
 
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group shadow-line">
-                                        <input type="text" class="form-control" placeholder="{{ $websiteLang->where('id',1)->first()->custom_text }}" name="search">
-                                    </div>
+
+                                        </select>
                                 </div>
-
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group shadow-line">
-                                        <select class="form-control select2" name="category_id" >
-                                                <option value="">{{ $websiteLang->where('id',2)->first()->custom_text }}</option>
-                                                @foreach ($listingCategories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
-
-
-                                            </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-12 col-sm-12">
-                                    <div class="form-group shadow-line">
-                                        <select class="form-control select2" name="location">
-                                                <option value="">{{ $websiteLang->where('id',3)->first()->custom_text }}</option>
-                                                @foreach ($locationsForSearch as $location)
-                                                <option value="{{ $location->id }}">{{ $location->location }}</option>
-                                                @endforeach
-                                            </select>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="page_type" value="list_view">
-
-                                <div class="text-center search-bar-btn col-lg-12">
-                                    <button class="site-button-secondry site-btn-effect">{{ $websiteLang->where('id',4)->first()->custom_text }}</button>
-                                </div>
-
                             </div>
+
+                            <div class="col-lg-4 col-md-12 col-sm-12">
+                                <div class="form-group shadow-line">
+                                    <select class="form-control select2" name="location">
+                                            <option value="">{{ $websiteLang->where('id',3)->first()->custom_text }}</option>
+                                            @foreach ($locationsForSearch as $location)
+                                            <option value="{{ $location->id }}">{{ $location->location }}</option>
+                                            @endforeach
+                                        </select>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="page_type" value="list_view">
+
+                            <div class="text-center search-bar-btn col-lg-12">
+                                <button class="site-button-secondry site-btn-effect">{{ $websiteLang->where('id',4)->first()->custom_text }}</button>
+                            </div>
+
+                        </div>
 
 
                         </form>
-
-
                     </div>
+                </div>
+                @endforeach
+
+                
+            
                 </div>
 
                 <!-- Left and right controls -->
@@ -107,70 +99,75 @@
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 <span class="sr-only">Next</span>
                 </a>
-                <div class="banner-image-overlay"></div>
-            </div> -->
-        <div class="banner-wrap bg-cover" style="background-image:url({{ $banner->image ? asset($banner->image) : '' }})">
+            </div>
+            <!-- </div> -->
+                    <!-- </div> -->
+                </div>
 
-            <div class="banner-image">
-                <div class="banner-content-area">
-                    <div class="container">
-                        <form method="GET" action="{{ route('search-listing') }}">
+            @else
+            <div class="banner-wrap bg-cover" style="background-image:url({{ $banner->image ? asset($banner->image) : '' }})">
 
-                            <div class="banner-textrow">
-                                <strong>{{ $banner_section->header }}</strong>
-                                <span>{{ $banner_section->description }}</span>
-                            </div>
+                <div class="banner-image">
+                    <div class="banner-content-area">
+                        <div class="container">
+                            <form method="GET" action="{{ route('search-listing') }}">
 
-                            <div class="search-bar-warp row">
+                                <div class="banner-textrow">
+                                    <strong>{{ $banner_section->header }}</strong>
+                                    <span>{{ $banner_section->description }}</span>
+                                </div>
 
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group shadow-line">
-                                        <input type="text" class="form-control" placeholder="{{ $websiteLang->where('id',1)->first()->custom_text }}" name="search">
+                                <div class="search-bar-warp row">
+
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group shadow-line">
+                                            <input type="text" class="form-control" placeholder="{{ $websiteLang->where('id',1)->first()->custom_text }}" name="search">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group shadow-line">
-                                        <select class="form-control select2" name="category_id" >
-                                                <option value="">{{ $websiteLang->where('id',2)->first()->custom_text }}</option>
-                                                @foreach ($listingCategories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endforeach
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group shadow-line">
+                                            <select class="form-control select2" name="category_id" >
+                                                    <option value="">{{ $websiteLang->where('id',2)->first()->custom_text }}</option>
+                                                    @foreach ($listingCategories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @endforeach
 
 
-                                            </select>
+                                                </select>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-lg-4 col-md-12 col-sm-12">
-                                    <div class="form-group shadow-line">
-                                        <select class="form-control select2" name="location">
-                                                <option value="">{{ $websiteLang->where('id',3)->first()->custom_text }}</option>
-                                                @foreach ($locationsForSearch as $location)
-                                                <option value="{{ $location->id }}">{{ $location->location }}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="col-lg-4 col-md-12 col-sm-12">
+                                        <div class="form-group shadow-line">
+                                            <select class="form-control select2" name="location">
+                                                    <option value="">{{ $websiteLang->where('id',3)->first()->custom_text }}</option>
+                                                    @foreach ($locationsForSearch as $location)
+                                                    <option value="{{ $location->id }}">{{ $location->location }}</option>
+                                                    @endforeach
+                                                </select>
+                                        </div>
                                     </div>
+
+                                    <input type="hidden" name="page_type" value="list_view">
+
+                                    <div class="text-center search-bar-btn col-lg-12">
+                                        <button class="site-button-secondry site-btn-effect">{{ $websiteLang->where('id',4)->first()->custom_text }}</button>
+                                    </div>
+
                                 </div>
 
-                                <input type="hidden" name="page_type" value="list_view">
 
-                                <div class="text-center search-bar-btn col-lg-12">
-                                    <button class="site-button-secondry site-btn-effect">{{ $websiteLang->where('id',4)->first()->custom_text }}</button>
-                                </div>
-
-                            </div>
+                            </form>
 
 
-                        </form>
-
-
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="banner-image-overlay"></div>
-        </div>
+                <div class="banner-image-overlay"></div>
+            </div>
+            @endif
         @endif
         <!-- Banner END -->
 
