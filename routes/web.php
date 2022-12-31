@@ -376,7 +376,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
 
     Route::post('slider-store',[SliderController::class,'storeSlider'])->name('slider.store');
-    Route::patch('slider-update',[SliderController::class,'updateSlider'])->name('slider.update');
+    Route::patch('slider-update/{id}',[SliderController::class,'updateSlider'])->name('slider.update');
     Route::resource('feature', FeatureController::class);
     Route::get('feature-status/{id}',[FeatureController::class,'changeStatus'])->name('feature.status');
 

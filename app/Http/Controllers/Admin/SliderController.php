@@ -170,7 +170,7 @@ class SliderController extends Controller
             })->save(public_path($image_path));
 
         $slider->image=$image_path;
-        $slider->status=$request->status;
+        $slider->status=0;
         $slider->type='slider';
         $slider->save();
 

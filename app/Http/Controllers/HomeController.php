@@ -78,7 +78,7 @@ class HomeController extends Controller
     }
 
     public function index(){
-        $banner=Slider::first();
+        $banner=Slider::where('type','banner')->first();
         $listingCategories=ListingCategory::where('status',1)->get();
         $section=HomeSection::all();
         $features=Feature::where('status',1)->get();
