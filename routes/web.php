@@ -417,9 +417,14 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
     Route::resource('listing',AdminListingController::class);
     Route::get('user-listing',[AdminListingController::class,'index'])->name('user.listing');
+    Route::get('user-listing/{id}',[AdminListingController::class,'edit'])->name('listing.edit');
+    Route::patch('user-listing/{id}',[AdminListingController::class,'update'])->name('listing.update');
+
     Route::get('delete-file/{id}',[AdminListingController::class,'deleteFile'])->name('delete-file');
 
     Route::get('my-listing',[AdminListingController::class,'myListing'])->name('my.listing');
+    Route::get('my-listing/{id}',[AdminListingController::class,'edit'])->name('my.listing.edit');
+    Route::patch('my-listing/{id}',[AdminListingController::class,'update'])->name('my.listing.update');
     Route::get('pending-listing',[AdminListingController::class,'pendingListing'])->name('pending.listing');
     Route::get('listing-status/{id}',[AdminListingController::class,'changeStatus'])->name('listing.status');
     Route::get('listing-image/{id}',[ListingImageController::class,'index'])->name('listing.image');

@@ -290,8 +290,9 @@ class AdminListingController extends Controller
     }
 
 
-    public function edit(Listing $listing)
+    public function edit($id)
     {
+        $listing=Listing::findorFail($id);
         $listingCategories=ListingCategory::where('status',1)->get();
         $locations=Location::where('status',1)->get();
         $aminities=Aminity::where('status',1)->get();
@@ -301,9 +302,9 @@ class AdminListingController extends Controller
     }
 
 
-    public function update(Request $request, Listing $listing)
+    public function update(Request $request, $id)
     {
-
+        $listing=Listing::findorFail($id);
         // project demo mode check
         if(env('PROJECT_MODE')==0){
             $notification=array('messege'=>env('NOTIFY_TEXT'),'alert-type'=>'error');
@@ -440,6 +441,9 @@ class AdminListingController extends Controller
             'alert-type'=>'success'
         );
 
+        if(request()->is('admin/user-listing/*')){
+            return redirect()->route('admin.user.listing')->with($notification);
+        }
         return redirect()->route('admin.my.listing')->with($notification);
     }
 

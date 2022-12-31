@@ -13,8 +13,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ $websiteLang->where('id',379)->first()->custom_text }}</h6>
                 </div>
                 <div class="card-body">
-
-                    <form action="{{ route('admin.listing.update',$listing->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ request()->is('admin/my-listing/*')?route('admin.my.listing.update',$listing->id):route('admin.listing.update',$listing->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('patch')
                         <div class="form-group">
