@@ -36,7 +36,7 @@ class SliderController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=null)
     {
 
         // project demo mode check
@@ -57,7 +57,12 @@ class SliderController extends Controller
 
         $this->validate($request, $rules, $customMessages);
 
-        $slider=Slider::find($id);
+        if(!empty($id)){
+            $slider=Slider::find($id);
+        }else{
+            $slider= new Slider();
+        }
+        
         $old_slider=$slider->image;
         $image=$request->image;
         $extention=$image->getClientOriginalExtension();
@@ -74,7 +79,9 @@ class SliderController extends Controller
         $slider->type='banner';
         $slider->save();
 
-        if(File::exists(public_path($old_slider)))unlink(public_path($old_slider));
+        if(!empty($id)){
+            if(File::exists(public_path($old_slider)))unlink(public_path($old_slider));
+        }
 
         $notification=array(
             'messege'=>$this->notify->where('id',8)->first()->custom_text,

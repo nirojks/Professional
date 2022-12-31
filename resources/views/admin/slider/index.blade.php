@@ -8,15 +8,16 @@
             <h6 class="m-0 font-weight-bold text-primary">{{ $websiteLang->where('id',278)->first()->custom_text }}</h6>
         </div>
         <div class="card-body">
-           <form action="{{ route('admin.banner.update',$slider->id) }}" method="POST" enctype="multipart/form-data">
+           <form action="{{ route('admin.banners.update',!empty($slider) && isset($slider->id)?$slider->id:'') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('patch')
             <div class="form-group">
+                @if(isset($slider->image) && !empty($slider->image))
                 <label for="">{{ $websiteLang->where('id',283)->first()->custom_text }}</label>
                 <div class="my-2">
-                    <img src="{{ $slider->image ? url($slider->image) : '' }}" alt="banner image" class="slider_w">
+                    <img src="{{ isset($slider->image) && $slider->image ? url($slider->image) : '' }}" alt="banner image" class="slider_w">
                 </div>
-
+                @endif
                 <label for="">{{ $websiteLang->where('id',284)->first()->custom_text }}</label>
                 <input type="file" name="image" class="form-control-file">
                 
@@ -25,8 +26,8 @@
             <div class="form-group">
                 <label for="status">{{ __('Slider') }}</label>
                 <select name="status" id="status" class="form-control">
-                    <option {{ $slider->status==1 ? 'selected' : '' }} value="1">{{ __('On') }}</option>
-                    <option {{ $slider->status==0 ? 'selected' : '' }} value="0">{{ __('Off') }}</option>
+                    <option {{ isset($slider->status) && $slider->status==1 ? 'selected' : '' }} value="1">{{ __('On') }}</option>
+                    <option {{ isset($slider->status) && $slider->status==0 ? 'selected' : '' }} value="0">{{ __('Off') }}</option>
                 </select>
             </div>
 
@@ -37,7 +38,7 @@
            <br>
           
 
-           @if($slider->status ==1)
+           @if(isset($slider->status) && $slider->status ==1)
            <h1 class="h3 mb-2 text-gray-800"><a href="#" data-toggle="modal" data-target="#createFeature" class="btn btn-primary"><i class="fas fa-plus" aria-hidden="true"></i> {{ __('Create Slider') }} </a></h1>
 
            <div class="table-responsive" id="slider_table">
@@ -98,9 +99,6 @@
                         @csrf
                         <div class="form-group">
                             <label for="">{{ __('Select image for slider')}}</label>
-                            <!-- <div class="my-2">
-                                <img src="{{ $slider->image ? url($slider->image) : '' }}" alt="banner image" class="slider_w">
-                            </div> -->
 
                             <!-- <label for="">{{ $websiteLang->where('id',284)->first()->custom_text }}</label> -->
                             <input type="file" name="image" class="form-control-file">
@@ -118,6 +116,7 @@
     </div>
 
   <!-- create feature Modal -->
+  @if(!empty($slider_images) && isset($slider->status) && $slider->status==1)
   @foreach ($slider_images as $item)
         <div class="modal fade" id="updateFeature-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -155,7 +154,7 @@
             </div>
         </div>
     @endforeach
-
+    @endif
 
     <script>
         function deleteData(id){
