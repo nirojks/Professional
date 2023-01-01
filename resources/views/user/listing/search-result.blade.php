@@ -702,7 +702,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group filter-address-inputs">
+                                    {{-- <div class="form-group filter-address-inputs">
                                         <select class="form-control select2" name="location">
                                             <option value="">{{ $websiteLang->where('id',3)->first()->custom_text }}</option>
                                             @foreach ($locationsForSearch as $location)
@@ -715,9 +715,91 @@
                                                 @endif
                                             @endforeach
                                         </select>
+                                    </div> --}}
+
+                                    <div class="form-group filter-address-inputs">
+                                        <div class="form-group">
+                                            <div>Longitude/Latitude</div>
+                                            <input id="keyword-value" type="text" class="form-control" name="longlat" value="{{ request()->has('longlat') ? request()->get('longlat') : '' }}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group filter-address-inputs">
+                                        <div style="position: relative;">
+                                            <div class="form-group" style="margin-bottom:0;">
+                                                <input id="input-keyword" type="text" name="maplocation" class="form-control" placeholder="Choose Location" value="{{ request()->has('maplocation') ? request()->get('maplocation') : '' }}" />
+                                            </div>
+                                            <div id="keyword-search-box">
+                                                <div class="list-group">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group filter-address-inputs">
+                                        <div class="form-group">
+                                            <select class="form-control select2" name="radius">
+                                                <option value="">Radius</option>
+                                                @if (request()->has('radius'))
+                                                    <option {{ request()->get('radius') ? 'selected' : ''  }} value="{{ request()->get('radius') }}">{{ request()->get('radius') }} KM</option>
+                                                @else
+                                                    <option value="1">1 KM</option>
+                                                    <option value="5">5 KM</option>
+                                                    <option value="10">10 KM</option>
+                                                    <option value="50">50 KM</option>
+                                                @endif
+                                            </select>
+                                        </div>
                                     </div>
 
 
+                                    <script>
+                                        function debounce(func, timeout = 300) {
+                                            let timer;
+                                            return (...args) => {
+                                                clearTimeout(timer);
+                                                timer = setTimeout(() => {
+                                                    func.apply(this, args);
+                                                }, timeout);
+                                            };
+                                        }
+        
+                                        $('#input-keyword').on('keyup', debounce(function() {
+                                            var settings = {
+                                                "url": "/gmap/textsearch/" + $('#input-keyword').val().replace(' ', '-'),
+                                                "method": "GET",
+                                                "timeout": 0,
+                                            };
+                                            var keywordSearchBox = document.querySelector("#keyword-search-box .list-group");
+        
+                                            keywordSearchBox.innerHTML = '';
+        
+                                            if ($('#input-keyword').val().length == 0) {
+                                                keywordSearchBox.style = '';
+                                            }
+        
+        
+                                            $.ajax(settings).done(function(response) {
+                                                var data = JSON.parse(response);
+                                                data.results.forEach(function(item) {
+                                                    keywordSearchBox.innerHTML += `
+                                                            <div style="cursor:pointer;" onclick="assignSearch('${item.geometry.location.lat},${item.geometry.location.lng}', '${item.name}, ${item.formatted_address}')" class="list-group-item list-group-item-action">
+                                                                ${item.name}, ${item.formatted_address}    
+                                                            </div>
+                                                        `;
+                                                });
+                                                if ($('#input-keyword').val().length > 0) {
+                                                    keywordSearchBox.style = 'height: 300px; overflow-y:scroll;';
+                                                }
+                                            });
+                                        }));
+        
+                                        function assignSearch(e, i) {
+                                            document.querySelector("#keyword-value").value = e;
+                                            document.querySelector('#input-keyword').value = i;
+                                            document.querySelector("#keyword-search-box .list-group").style="display: none;";
+                                        }
+                                    </script>
 
                                     <div class="form-group">
                                         <div class="text-left m-b30">
