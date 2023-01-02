@@ -8,7 +8,19 @@ $isRtl=$setting->text_direction;
 
  <!-- FOOTER START -->
  <footer class="site-footer footer-large footer-light text-white">
-
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/639ceea0b0d6371309d4d1af/1gkeg8921';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
     <!-- FOOTER BLOCKES START -->
     <div class="footer-top  dot2-left-top-img">
         <div class="container">
