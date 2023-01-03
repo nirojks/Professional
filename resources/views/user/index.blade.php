@@ -13,13 +13,18 @@
     <style>
         .splide__slide img {
             width: 100%;
-            height: 600px;
+            height: 500px;
             object-fit: cover;
+        }
+
+        #splide {
+            max-width: 1090px;
+            margin: auto;
         }
 
         @media screen and (max-width: 600px) {
             .splide__slide img {
-                height: 400px !important;
+                height: 300px !important;
             }
         }
     </style>
