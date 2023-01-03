@@ -13,13 +13,13 @@
     <style>
         .splide__slide img {
             width: 100%;
-            height: 500px;
+            height: 600px;
             object-fit: cover;
         }
 
         @media screen and (max-width: 600px) {
             .splide__slide img {
-                height: 300px !important;
+                height: 400px !important;
             }
         }
     </style>
@@ -221,14 +221,19 @@
             </div>
         @endif
 
-        <div>
+        <div class="mt-5">
             <div id="splide" class="splide">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        <li class="splide__slide"><img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1200"></li>
-                        <li class="splide__slide"><img src="https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?auto=compress&cs=tinysrgb&w=1200"></li>
-                        <li class="splide__slide"><img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200"></li>
-                        <li class="splide__slide"><img src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=1200"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Brick cleaner.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Cleaner.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Electrician.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Gardener.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/house builder.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Painting.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Pest control.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Plumber.jpg') }}"></li>
+                        <li class="splide__slide"><img src="{{ asset('sliders/Security.jpg') }}"></li>
                     </ul>
                 </div>
             </div>
