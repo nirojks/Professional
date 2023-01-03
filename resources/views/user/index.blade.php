@@ -126,6 +126,7 @@
 
                 </div> -->
             <!-- @else -->
+            <!-- @endif -->
                 <div class="banner-wrap bg-cover"
                     style="background-image:url({{ $banner->image ? asset($banner->image) : '' }})">
                     <div class="banner-image">
@@ -191,7 +192,7 @@
                     </div>
                     <div class="banner-image-overlay"></div>
                 </div>
-            <!-- @endif -->
+            
         @endif
         <!-- Banner END -->
 
