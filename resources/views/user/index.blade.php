@@ -38,12 +38,10 @@
         @if ($banner_section->show_homepage == 1)
             <!-- Banner -->
 
-            @if ($banner->status == 1)
-                <div class="banner-image">
-                    <!-- <div class="banner-content-area"> -->
-                    <!-- <div class="container"> -->
+            <!-- @if ($banner->status == 1) -->
+                <!-- <div class="banner-image">
+             
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Wrapper for slides -->
                         <div class="carousel-inner">
 
                             @foreach ($sliders as $index => $slider)
@@ -116,7 +114,6 @@
 
                         </div>
 
-                        <!-- Left and right controls -->
                         <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                             <span class="sr-only">Previous</span>
@@ -126,10 +123,9 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-                    <!-- </div> -->
-                    <!-- </div> -->
-                </div>
-            @else
+
+                </div> -->
+            <!-- @else -->
                 <div class="banner-wrap bg-cover"
                     style="background-image:url({{ $banner->image ? asset($banner->image) : '' }})">
                     <div class="banner-image">
@@ -195,7 +191,7 @@
                     </div>
                     <div class="banner-image-overlay"></div>
                 </div>
-            @endif
+            <!-- @endif -->
         @endif
         <!-- Banner END -->
 

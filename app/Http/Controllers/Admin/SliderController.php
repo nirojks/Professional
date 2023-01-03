@@ -47,7 +47,7 @@ class SliderController extends Controller
         // end
 
         $rules = [
-            'image'=>'required'
+            // 'image'=>'required'
         ];
 
         $customMessages = [
@@ -75,7 +75,7 @@ class SliderController extends Controller
             })->save(public_path($image_path));
 
         $slider->image=$image_path;
-        $slider->status=$request->status;
+        // $slider->status=$request->status;
         $slider->type='banner';
         $slider->save();
 

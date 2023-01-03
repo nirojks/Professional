@@ -23,13 +23,13 @@
                 
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="status">{{ __('Slider') }}</label>
                 <select name="status" id="status" class="form-control">
                     <option {{ isset($slider->status) && $slider->status==1 ? 'selected' : '' }} value="1">{{ __('On') }}</option>
                     <option {{ isset($slider->status) && $slider->status==0 ? 'selected' : '' }} value="0">{{ __('Off') }}</option>
                 </select>
-            </div>
+            </div> -->
 
             <button class="btn btn-success" type="submit">{{ $websiteLang->where('id',118)->first()->custom_text }}</button>
 
@@ -38,7 +38,7 @@
            <br>
           
 
-           @if(isset($slider->status) && $slider->status ==1)
+           <!-- @if(isset($slider->status) && $slider->status ==1)
            <h1 class="h3 mb-2 text-gray-800"><a href="#" data-toggle="modal" data-target="#createFeature" class="btn btn-primary"><i class="fas fa-plus" aria-hidden="true"></i> {{ __('Create Slider') }} </a></h1>
 
            <div class="table-responsive" id="slider_table">
@@ -74,7 +74,7 @@
                 </table>
             </div>
             
-            @endif
+            @endif -->
         </div>
 
 
@@ -83,7 +83,7 @@
     </div>
 
 
-    <div class="modal fade" id="createFeature" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <!-- <div class="modal fade" id="createFeature" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                     <div class="modal-header">
@@ -100,7 +100,6 @@
                         <div class="form-group">
                             <label for="">{{ __('Select image for slider')}}</label>
 
-                            <!-- <label for="">{{ $websiteLang->where('id',284)->first()->custom_text }}</label> -->
                             <input type="file" name="image" class="form-control-file">
                             
                         </div>
@@ -113,10 +112,10 @@
 
             </div>
         </div>
-    </div>
+    </div> -->
 
   <!-- create feature Modal -->
-  @if(!empty($slider_images) && isset($slider->status) && $slider->status==1)
+  <!-- @if(!empty($slider_images) && isset($slider->status) && $slider->status==1)
   @foreach ($slider_images as $item)
         <div class="modal fade" id="updateFeature-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -154,12 +153,12 @@
             </div>
         </div>
     @endforeach
-    @endif
+    @endif -->
 
-    <script>
+    <!-- <script>
         function deleteData(id){
             $("#deleteForm").attr("action",'{{ url("admin/slider/") }}'+"/"+id)
         }
-    </script>
+    </script> -->
 
 @endsection
