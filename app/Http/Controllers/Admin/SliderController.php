@@ -47,7 +47,7 @@ class SliderController extends Controller
         // end
 
         $rules = [
-            // 'image'=>'required'
+            'image'=>'required'
         ];
 
         $customMessages = [
